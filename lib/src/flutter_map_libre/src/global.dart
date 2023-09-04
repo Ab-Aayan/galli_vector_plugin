@@ -4,7 +4,7 @@
 
 part of maplibre_gl;
 
-final MethodChannel _globalChannel =
+const MethodChannel _globalChannel =
     MethodChannel('plugins.flutter.io/mapbox_gl');
 
 /// Copy tiles db file passed in to the tiles cache directory (sideloaded) to

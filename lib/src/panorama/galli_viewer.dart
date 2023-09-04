@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:galli_vector_plugin/src/encryption/encryption.dart';
 import 'package:galli_vector_plugin/src/panorama/panorama.dart';
@@ -24,7 +22,7 @@ class GalliViewer extends StatefulWidget {
   )? onMarkerTap;
 
   const GalliViewer({
-    super.key,
+    Key? key,
     required this.builder,
     required this.image,
     this.errorBuilder,
@@ -37,7 +35,7 @@ class GalliViewer extends StatefulWidget {
     this.showClearMarkersButton = true,
     this.removeMarkerOnTap = true,
     this.onMarkerTap,
-  });
+  }) : super(key: key);
 
   @override
   State<GalliViewer> createState() => _GalliViewerState();

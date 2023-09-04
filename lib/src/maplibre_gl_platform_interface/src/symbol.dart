@@ -14,6 +14,7 @@ class GalliMarker implements Annotation {
   /// The identifier is an arbitrary unique string.
   final String _id;
 
+  @override
   String get id => _id;
 
   final Map? _data;
@@ -38,7 +39,7 @@ class GalliMarker implements Annotation {
   @override
   void translate(LatLng delta) {
     options = options
-        .copyWith(GalliMarkerOptions(geometry: this.options.geometry! + delta));
+        .copyWith(GalliMarkerOptions(geometry: options.geometry! + delta));
   }
 }
 

@@ -189,8 +189,8 @@ class LineManager extends AnnotationManager<Line> {
   @override
   List<LayerProperties> get allLayerProperties => [
         _baseProperties,
-        _baseProperties.copyWith(
-            LineLayerProperties(linePattern: [Expressions.get, 'linePattern'])),
+        _baseProperties.copyWith(const LineLayerProperties(
+            linePattern: [Expressions.get, 'linePattern'])),
       ];
 }
 

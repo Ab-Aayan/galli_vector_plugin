@@ -13,6 +13,7 @@ class Circle implements Annotation {
   ///
   /// The identifier is an arbitrary unique string.
   final String _id;
+  @override
   String get id => _id;
 
   final Map? _data;
@@ -36,8 +37,8 @@ class Circle implements Annotation {
 
   @override
   void translate(LatLng delta) {
-    options = options
-        .copyWith(CircleOptions(geometry: this.options.geometry! + delta));
+    options =
+        options.copyWith(CircleOptions(geometry: options.geometry! + delta));
   }
 }
 

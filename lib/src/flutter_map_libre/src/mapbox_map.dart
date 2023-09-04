@@ -6,7 +6,7 @@ part of maplibre_gl;
 
 enum AnnotationType { fill, line, circle, symbol }
 
-typedef void MapCreatedCallback(GalliMapController controller);
+typedef MapCreatedCallback = void Function(GalliMapController controller);
 
 class MaplibreMap extends StatefulWidget {
   const MaplibreMap({
@@ -27,12 +27,12 @@ class MaplibreMap extends StatefulWidget {
     this.dragEnabled = true,
     this.trackCameraPosition = false,
     this.myLocationEnabled = false,
-    this.myLocationTrackingMode = MyLocationTrackingMode.None,
-    this.myLocationRenderMode = MyLocationRenderMode.NORMAL,
+    this.myLocationTrackingMode = MyLocationTrackingMode.none,
+    this.myLocationRenderMode = MyLocationRenderMode.normal,
     this.logoViewMargins,
     this.compassViewPosition,
     this.compassViewMargins,
-    this.attributionButtonPosition = AttributionButtonPosition.BottomRight,
+    this.attributionButtonPosition = AttributionButtonPosition.bottomRight,
     this.attributionButtonMargins,
     this.onMapClick,
     this.onUserLocationUpdated,
@@ -54,7 +54,7 @@ class MaplibreMap extends StatefulWidget {
       AnnotationType.circle,
     ],
   })  : assert(
-          myLocationRenderMode != MyLocationRenderMode.NORMAL
+          myLocationRenderMode != MyLocationRenderMode.normal
               ? myLocationEnabled
               : true,
           "$myLocationRenderMode requires [myLocationEnabled] set to true.",

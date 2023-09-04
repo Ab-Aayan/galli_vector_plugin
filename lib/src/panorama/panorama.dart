@@ -3,7 +3,6 @@ import 'dart:ui' as ui;
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:flutter_cube/flutter_cube.dart' as cube;
-import 'package:motion_sensors/motion_sensors.dart';
 import 'dart:core';
 
 enum SensorControl {
@@ -146,7 +145,7 @@ class Panorama extends StatefulWidget {
   final List<Marker>? markers;
 
   @override
-  _PanoramaState createState() => _PanoramaState();
+  State<Panorama> createState() => _PanoramaState();
 }
 
 class _PanoramaState extends State<Panorama>
@@ -223,9 +222,7 @@ class _PanoramaState extends State<Panorama>
         math.pi *
         offset.dx /
         scene!.camera.viewportHeight;
-    if (_lastZoom == null) {
-      _lastZoom = scene!.camera.zoom;
-    }
+    _lastZoom ??= scene!.camera.zoom;
     zoomDelta += _lastZoom! * details.scale - (scene!.camera.zoom + zoomDelta);
     if (widget.sensorControl == SensorControl.none &&
         !_controller.isAnimating) {
@@ -317,36 +314,36 @@ class _PanoramaState extends State<Panorama>
     _streamController.add(null);
   }
 
-  void _updateSensorControl() {
-    _orientationSubscription?.cancel();
-    switch (widget.sensorControl) {
-      case SensorControl.orientation:
-        motionSensors.orientationUpdateInterval =
-            Duration.microsecondsPerSecond ~/ 60;
-        _orientationSubscription =
-            motionSensors.orientation.listen((OrientationEvent event) {
-          orientation.setValues(event.yaw, event.pitch, event.roll);
-        });
-        break;
-      case SensorControl.absoluteOrientation:
-        motionSensors.absoluteOrientationUpdateInterval =
-            Duration.microsecondsPerSecond ~/ 60;
-        _orientationSubscription = motionSensors.absoluteOrientation
-            .listen((AbsoluteOrientationEvent event) {
-          orientation.setValues(event.yaw, event.pitch, event.roll);
-        });
-        break;
-      default:
-    }
+  // void _updateSensorControl() {
+  //   _orientationSubscription?.cancel();
+  //   switch (widget.sensorControl) {
+  //     case SensorControl.orientation:
+  //       motionSensors.orientationUpdateInterval =
+  //           Duration.microsecondsPerSecond ~/ 60;
+  //       _orientationSubscription =
+  //           motionSensors.orientation.listen((OrientationEvent event) {
+  //         orientation.setValues(event.yaw, event.pitch, event.roll);
+  //       });
+  //       break;
+  //     case SensorControl.absoluteOrientation:
+  //       motionSensors.absoluteOrientationUpdateInterval =
+  //           Duration.microsecondsPerSecond ~/ 60;
+  //       _orientationSubscription = motionSensors.absoluteOrientation
+  //           .listen((AbsoluteOrientationEvent event) {
+  //         orientation.setValues(event.yaw, event.pitch, event.roll);
+  //       });
+  //       break;
+  //     default:
+  //   }
 
-    _screenOrientSubscription?.cancel();
-    if (widget.sensorControl != SensorControl.none) {
-      _screenOrientSubscription = motionSensors.screenOrientation
-          .listen((ScreenOrientationEvent event) {
-        screenOrientation = cube.radians(event.angle!);
-      });
-    }
-  }
+  //   _screenOrientSubscription?.cancel();
+  //   if (widget.sensorControl != SensorControl.none) {
+  //     _screenOrientSubscription = motionSensors.screenOrientation
+  //         .listen((ScreenOrientationEvent event) {
+  //       screenOrientation = cube.radians(event.angle!);
+  //     });
+  //   }
+  // }
 
   void _updateTexture(ImageInfo imageInfo, bool synchronousCall) {
     setState(() => isLoading = false);
@@ -494,7 +491,7 @@ class _PanoramaState extends State<Panorama>
     _streamController = StreamController<void>.broadcast();
     _stream = _streamController.stream;
 
-    _updateSensorControl();
+    // _updateSensorControl();
 
     _controller = AnimationController(
         duration: const Duration(milliseconds: 60000), vsync: this)
@@ -537,9 +534,9 @@ class _PanoramaState extends State<Panorama>
     if (widget.child?.image != oldWidget.child?.image) {
       _loadTexture(widget.child?.image);
     }
-    if (widget.sensorControl != oldWidget.sensorControl) {
-      _updateSensorControl();
-    }
+    // if (widget.sensorControl != oldWidget.sensorControl) {
+    //   _updateSensorControl();
+    // }
   }
 
   @override

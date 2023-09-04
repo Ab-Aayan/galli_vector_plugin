@@ -103,6 +103,7 @@ class VectorSourceProperties implements SourceProperties {
     );
   }
 
+  @override
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> json = <String, dynamic>{};
 
@@ -233,6 +234,7 @@ class RasterSourceProperties implements SourceProperties {
     );
   }
 
+  @override
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> json = <String, dynamic>{};
 
@@ -366,6 +368,7 @@ class RasterDemSourceProperties implements SourceProperties {
     );
   }
 
+  @override
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> json = <String, dynamic>{};
 
@@ -549,6 +552,7 @@ class GeojsonSourceProperties implements SourceProperties {
     );
   }
 
+  @override
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> json = <String, dynamic>{};
 
@@ -618,6 +622,7 @@ class VideoSourceProperties implements SourceProperties {
     );
   }
 
+  @override
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> json = <String, dynamic>{};
 
@@ -667,6 +672,7 @@ class ImageSourceProperties implements SourceProperties {
     );
   }
 
+  @override
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> json = <String, dynamic>{};
 

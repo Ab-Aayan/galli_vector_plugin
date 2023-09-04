@@ -1,5 +1,3 @@
-import 'dart:convert';
-import 'package:flutter/material.dart';
 import 'package:galli_vector_plugin/galli_vector_plugin.dart';
 import 'package:galli_vector_plugin/src/api/galli_api.dart';
 import 'package:galli_vector_plugin/src/encryption/encryption.dart';
@@ -46,13 +44,12 @@ class GalliMethods {
   }
 
   Future get360Image(LatLng latlng, {int threshold = 20}) async {
-    String? three60Image = await imageApi.get(
+    var three60Image = await imageApi.get(
         galliUrl.get360Image(latlng,
             threshold: threshold, accessToken: accessToken),
         accessToken);
     if (three60Image != null) {
-      var data = jsonDecode(three60Image);
-      String imageUrl = data["data"]["imgurl"];
+      String imageUrl = three60Image["data"]["imgurl"];
       return encrypt(imageUrl);
     } else {
       return null;

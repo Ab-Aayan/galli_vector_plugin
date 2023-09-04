@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'dart:math' hide log;
 import 'package:flutter/material.dart';
 import 'package:galli_vector_plugin/src/api/methods.dart';
@@ -33,7 +32,7 @@ class GalliMap extends StatefulWidget {
       this.showCurrentLocation = true,
       this.showCompass = true,
       this.compassPosition = (
-        position: CompassViewPosition.BottomRight,
+        position: CompassViewPosition.bottomRight,
         offset: const Point(30, 48)
       ),
       this.showCurrentLocationButton = true,
@@ -107,8 +106,8 @@ class _GalliMapState extends State<GalliMap> {
                 },
                 trackCameraPosition: true,
                 myLocationEnabled: widget.showCurrentLocation,
-                myLocationRenderMode: MyLocationRenderMode.COMPASS,
-                myLocationTrackingMode: MyLocationTrackingMode.Tracking,
+                myLocationRenderMode: MyLocationRenderMode.compass,
+                myLocationTrackingMode: MyLocationTrackingMode.tracking,
                 compassEnabled: widget.showCompass,
                 compassViewPosition: widget.compassPosition.position,
                 compassViewMargins: widget.compassPosition.offset,

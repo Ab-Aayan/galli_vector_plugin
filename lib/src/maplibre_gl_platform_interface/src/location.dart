@@ -48,8 +48,10 @@ class LatLng {
   String toString() => '$runtimeType($latitude, $longitude)';
 
   @override
-  bool operator ==(Object o) {
-    return o is LatLng && o.latitude == latitude && o.longitude == longitude;
+  bool operator ==(Object other) {
+    return other is LatLng &&
+        other.latitude == latitude &&
+        other.longitude == longitude;
   }
 
   @override
@@ -99,10 +101,10 @@ class LatLngBounds {
   }
 
   @override
-  bool operator ==(Object o) {
-    return o is LatLngBounds &&
-        o.southwest == southwest &&
-        o.northeast == northeast;
+  bool operator ==(Object other) {
+    return other is LatLngBounds &&
+        other.southwest == southwest &&
+        other.northeast == northeast;
   }
 
   @override
@@ -155,12 +157,12 @@ class LatLngQuad {
   }
 
   @override
-  bool operator ==(Object o) {
-    return o is LatLngQuad &&
-        o.topLeft == topLeft &&
-        o.topRight == topRight &&
-        o.bottomRight == bottomRight &&
-        o.bottomLeft == bottomLeft;
+  bool operator ==(Object other) {
+    return other is LatLngQuad &&
+        other.topLeft == topLeft &&
+        other.topRight == topRight &&
+        other.bottomRight == bottomRight &&
+        other.bottomLeft == bottomLeft;
   }
 
   @override

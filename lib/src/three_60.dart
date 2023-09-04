@@ -38,6 +38,5 @@ class Three60ButtonWidget extends StatelessWidget {
         ),
       ),
     );
-    ;
   }
 }
