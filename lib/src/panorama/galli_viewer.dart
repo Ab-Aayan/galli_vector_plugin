@@ -61,6 +61,7 @@ class _GalliViewerState extends State<GalliViewer> {
     widget.builder.call(context, clearMarkers);
     return ClipRRect(
       child: Panorama(
+        sensitivity: 1.4,
         onTap: (longitude, latitude, tilt) {
           if (widget.onTap != null) {
             widget.onTap!(latitude, longitude, tilt);

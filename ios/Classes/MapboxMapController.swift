@@ -344,7 +344,7 @@ class MapboxMapController: NSObject, FlutterPlatformView, MGLMapViewDelegate, Ma
             let maxzoom = arguments["maxzoom"] as? Double
             let filter = arguments["filter"] as? String
 
-            let addResult = addGalliMarkerLayer(
+            let addResult = addSymbolLayer(
                 sourceId: sourceId,
                 layerId: layerId,
                 belowLayerId: belowLayerId,
@@ -1059,7 +1059,7 @@ class MapboxMapController: NSObject, FlutterPlatformView, MGLMapViewDelegate, Ma
         }
     }
 
-    func addGalliMarkerLayer(
+    func addSymbolLayer(
         sourceId: String,
         layerId: String,
         belowLayerId: String?,

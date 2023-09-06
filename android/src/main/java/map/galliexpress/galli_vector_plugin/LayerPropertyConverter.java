@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Map;
 
 class LayerPropertyConverter {
-  static PropertyValue[] interpretGalliMarkerLayerProperties(Object o) {
+  static PropertyValue[] interpretSymbolLayerProperties(Object o) {
     final Map<String, String> data = (Map<String, String>) toMap(o);
     final List<PropertyValue> properties = new LinkedList();
     final JsonParser parser = new JsonParser();

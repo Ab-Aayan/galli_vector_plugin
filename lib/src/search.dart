@@ -55,15 +55,17 @@ class _GalliSearchWidgetState extends State<GalliSearchWidget> {
         autoCompleteResults.clear();
         setState(() {});
         var data = await GalliMethods(widget.authToken).autoComplete(query);
-        for (Map rawData in data["data"]) {
-          if (autoCompleteResults.length < 10 && rawData["name"] != "") {
-            autoCompleteResults.add({
-              "name": rawData["name"],
-              "distance":
-                  (double.parse(rawData["distance"]) / 1000).toStringAsFixed(2)
-            });
-            setState(() {});
-            await Future.delayed(const Duration(milliseconds: 10));
+        if (data != null) {
+          for (Map rawData in data["data"]) {
+            if (autoCompleteResults.length < 10 && rawData["name"] != "") {
+              autoCompleteResults.add({
+                "name": rawData["name"],
+                "distance": (double.parse(rawData["distance"]) / 1000)
+                    .toStringAsFixed(2)
+              });
+              setState(() {});
+              await Future.delayed(const Duration(milliseconds: 10));
+            }
           }
         }
       } catch (error) {
@@ -161,7 +163,7 @@ class _GalliSearchWidgetState extends State<GalliSearchWidget> {
                       search();
                     },
                     decoration: InputDecoration(
-                        contentPadding: const EdgeInsets.fromLTRB(16, 0, 0, 8),
+                        contentPadding: const EdgeInsets.fromLTRB(16, 0, 0, 4),
                         border: InputBorder.none,
                         hintText: widget.hint,
                         hintStyle: const TextStyle(fontSize: 14)),

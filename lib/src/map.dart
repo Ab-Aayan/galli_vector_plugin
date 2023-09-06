@@ -5,6 +5,7 @@ import 'package:galli_vector_plugin/src/current_location.dart';
 import 'package:galli_vector_plugin/src/flutter_map_libre/mapbox_gl.dart';
 import 'package:galli_vector_plugin/src/search.dart';
 import 'package:galli_vector_plugin/src/three_60.dart';
+import 'package:geolocator/geolocator.dart';
 export 'package:galli_vector_plugin/src/flutter_map_libre/mapbox_gl.dart';
 
 class GalliMap extends StatefulWidget {
@@ -64,9 +65,27 @@ class GalliMap extends StatefulWidget {
 
 class _GalliMapState extends State<GalliMap> {
   late GalliMethods galliMethods;
+  bool loading = true;
+
+  locationChecker() async {
+    if (widget.showCurrentLocation) {
+      LocationPermission permission = await Geolocator.checkPermission();
+      if (permission == LocationPermission.denied ||
+          permission == LocationPermission.deniedForever) {
+        await Geolocator.requestPermission();
+        await Geolocator.getCurrentPosition();
+      } else {
+        await Geolocator.getCurrentPosition();
+      }
+    }
+    setState(() {
+      loading = false;
+    });
+  }
 
   @override
   void initState() {
+    locationChecker();
     galliMethods = GalliMethods(widget.authToken);
     super.initState();
   }
@@ -76,83 +95,93 @@ class _GalliMapState extends State<GalliMap> {
     return SizedBox(
       width: widget.size.width,
       height: widget.size.height,
-      child: Stack(children: [
-        ClipRRect(
-          child: Transform.scale(
-            scale: 1.18,
-            child: MaplibreMap(
-                minMaxZoomPreference: widget.minMaxZoomPreference,
-                doubleClickZoomEnabled: widget.doubleClickZoomEnabled,
-                dragEnabled: widget.dragEnabled,
-                rotateGesturesEnabled: widget.rotateGestureEnabled,
-                zoomGesturesEnabled: widget.zoomGestureEnabled,
-                tiltGesturesEnabled: widget.tiltGestureEnabled,
-                scrollGesturesEnabled: widget.scrollGestureEnabled,
-                onMapLongClick: (Point<num> data, LatLng latlng) {
-                  if (widget.onMapLongPress != null) {
-                    widget.onMapLongPress!(latlng);
-                  }
-                },
-                onMapCreated: (_) {
-                  galliMapController = _;
-                  if (widget.onMapCreated != null) {
-                    widget.onMapCreated!(_);
-                  }
-                },
-                onMapClick: (point, coordinates) async {
-                  if (widget.onMapClick != null) {
-                    widget.onMapClick!(coordinates);
-                  }
-                },
-                trackCameraPosition: true,
-                myLocationEnabled: widget.showCurrentLocation,
-                myLocationRenderMode: MyLocationRenderMode.compass,
-                myLocationTrackingMode: MyLocationTrackingMode.tracking,
-                compassEnabled: widget.showCompass,
-                compassViewPosition: widget.compassPosition.position,
-                compassViewMargins: widget.compassPosition.offset,
-                onUserLocationUpdated: (UserLocation location) {
-                  if (widget.onUserLocationChanged != null) {
-                    widget.onUserLocationChanged!(location);
-                  }
-                },
-                styleString:
-                    "https://maps.gallimap.com/styles/light/style.json",
-                initialCameraPosition: widget.initialCameraPostion),
-          ),
-        ),
-        Positioned(
-            bottom: 4,
-            left: 8,
-            child: Container(
+      child: loading
+          ? const Center(
+              child: SizedBox(
                 width: 32,
                 height: 32,
-                alignment: Alignment.centerLeft,
-                child: Image.network(
-                  "https://gallimaps.com/images/logo2.png",
-                  colorBlendMode: BlendMode.srcIn,
-                  color: const Color(0Xff812C19),
-                  fit: BoxFit.contain,
-                ))),
-        if (galliMapController != null && widget.showCurrentLocationButton)
-          Positioned(
-              bottom: 16,
-              right: 16,
-              child: CurrentLocationWidget(
-                controller: galliMapController!,
-              )),
-        if (galliMapController != null)
-          Positioned(
-              bottom: 73,
-              right: 16,
-              child: Three60ButtonWidget(controller: galliMapController!)),
-        if (galliMapController != null)
-          GalliSearchWidget(
-            width: widget.size.width * 0.9,
-            authToken: widget.authToken,
-            mapController: galliMapController!,
-          )
-      ]),
+                child: CircularProgressIndicator.adaptive(),
+              ),
+            )
+          : Stack(children: [
+              ClipRRect(
+                child: Transform.scale(
+                  scale: 1.18,
+                  child: MaplibreMap(
+                      minMaxZoomPreference: widget.minMaxZoomPreference,
+                      doubleClickZoomEnabled: widget.doubleClickZoomEnabled,
+                      dragEnabled: widget.dragEnabled,
+                      rotateGesturesEnabled: widget.rotateGestureEnabled,
+                      zoomGesturesEnabled: widget.zoomGestureEnabled,
+                      tiltGesturesEnabled: widget.tiltGestureEnabled,
+                      scrollGesturesEnabled: widget.scrollGestureEnabled,
+                      onMapLongClick: (Point<num> data, LatLng latlng) {
+                        if (widget.onMapLongPress != null) {
+                          widget.onMapLongPress!(latlng);
+                        }
+                      },
+                      onMapCreated: (_) {
+                        galliMapController = _;
+                        if (widget.onMapCreated != null) {
+                          widget.onMapCreated!(_);
+                        }
+                      },
+                      onMapClick: (point, coordinates) async {
+                        if (widget.onMapClick != null) {
+                          widget.onMapClick!(coordinates);
+                        }
+                      },
+                      trackCameraPosition: true,
+                      myLocationEnabled: widget.showCurrentLocation,
+                      myLocationRenderMode: MyLocationRenderMode.compass,
+                      myLocationTrackingMode: MyLocationTrackingMode.tracking,
+                      compassEnabled: widget.showCompass,
+                      compassViewPosition: widget.compassPosition.position,
+                      compassViewMargins: widget.compassPosition.offset,
+                      onUserLocationUpdated: (UserLocation location) {
+                        if (widget.onUserLocationChanged != null) {
+                          widget.onUserLocationChanged!(location);
+                        }
+                      },
+                      styleString:
+                          "https://maps.gallimap.com/styles/light/style.json",
+                      initialCameraPosition: widget.initialCameraPostion),
+                ),
+              ),
+              Positioned(
+                  bottom: 4,
+                  left: 8,
+                  child: Container(
+                      width: 32,
+                      height: 32,
+                      alignment: Alignment.centerLeft,
+                      child: Image.network(
+                        "https://gallimaps.com/images/logo2.png",
+                        colorBlendMode: BlendMode.srcIn,
+                        color: const Color(0Xff812C19),
+                        fit: BoxFit.contain,
+                      ))),
+              if (galliMapController != null &&
+                  widget.showCurrentLocationButton)
+                Positioned(
+                    bottom: 16,
+                    right: 16,
+                    child: CurrentLocationWidget(
+                      controller: galliMapController!,
+                    )),
+              if (galliMapController != null)
+                Positioned(
+                    bottom: 73,
+                    right: 16,
+                    child:
+                        Three60ButtonWidget(controller: galliMapController!)),
+              if (galliMapController != null)
+                GalliSearchWidget(
+                  width: widget.size.width * 0.9,
+                  authToken: widget.authToken,
+                  mapController: galliMapController!,
+                )
+            ]),
     );
   }
 }

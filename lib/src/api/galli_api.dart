@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:galli_vector_plugin/src/static/url.dart';
 import 'package:http/http.dart' as http;
@@ -22,6 +23,7 @@ class GalliApi {
             'Error', 408); // Request Timeout response status code
       },
     );
+    log("response: ${response.body}");
     if (response.statusCode == 200) {
       return jsonDecode(response.body);
     } else {

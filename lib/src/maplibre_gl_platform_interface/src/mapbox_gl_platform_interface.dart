@@ -123,7 +123,7 @@ abstract class MapLibreGlPlatform {
 
   Future<void> removeSource(String sourceId);
 
-  Future<void> addGalliMarkerLayer(
+  Future<void> addSymbolLayer(
       String sourceId, String layerId, Map<String, dynamic> properties,
       {String? belowLayerId,
       String? sourceLayer,

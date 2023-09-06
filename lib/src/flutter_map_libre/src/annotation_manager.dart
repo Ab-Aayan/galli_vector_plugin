@@ -295,7 +295,7 @@ class GalliMarkerManager extends AnnotationManager<GalliMarker> {
 
   @override
   List<LayerProperties> get allLayerProperties => [
-        GalliMarkerLayerProperties(
+        SymbolLayerProperties(
           iconSize: [Expressions.get, 'iconSize'],
           iconImage: [Expressions.get, 'iconImage'],
           iconRotate: [Expressions.get, 'iconRotate'],

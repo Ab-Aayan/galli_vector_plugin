@@ -5,14 +5,14 @@ package map.galliexpress.galli_vector_plugin
 import com.mapbox.mapboxsdk.maps.MapboxMap
 import com.mapbox.mapboxsdk.style.expressions.Expression
 import com.mapbox.mapboxsdk.style.layers.PropertyFactory
-import com.mapbox.mapboxsdk.style.layers.GalliMarkerLayer
+import com.mapbox.mapboxsdk.style.layers.SymbolLayer
 
 fun MapboxMap.setMapLanguage(language: String) {
     val layers = this.style?.layers ?: emptyList()
 
     val languageRegex = Regex("(name:[a-z]+)")
 
-    val symbolLayers = layers.filterIsInstance<GalliMarkerLayer>()
+    val symbolLayers = layers.filterIsInstance<SymbolLayer>()
 
     for (layer in symbolLayers) {
         // continue when there is no current expression

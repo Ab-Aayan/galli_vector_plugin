@@ -68,7 +68,7 @@ import com.mapbox.mapboxsdk.style.layers.LineLayer;
 import com.mapbox.mapboxsdk.style.layers.Property;
 import com.mapbox.mapboxsdk.style.layers.PropertyValue;
 import com.mapbox.mapboxsdk.style.layers.RasterLayer;
-import com.mapbox.mapboxsdk.style.layers.GalliMarkerLayer;
+import com.mapbox.mapboxsdk.style.layers.SymbolLayer;
 import com.mapbox.mapboxsdk.style.layers.PropertyFactory;
 import com.mapbox.mapboxsdk.style.sources.CustomGeometrySource;
 import com.mapbox.mapboxsdk.style.sources.GeoJsonSource;
@@ -408,7 +408,7 @@ final class MapboxMapController
     }
   }
 
-  private void addGalliMarkerLayer(
+  private void addSymbolLayer(
       String layerName,
       String sourceName,
       String belowLayerId,
@@ -418,7 +418,7 @@ final class MapboxMapController
       PropertyValue[] properties,
       boolean enableInteraction,
       Expression filter) {
-    GalliMarkerLayer symbolLayer = new GalliMarkerLayer(layerName, sourceName);
+    SymbolLayer symbolLayer = new SymbolLayer(layerName, sourceName);
     symbolLayer.setProperties(properties);
     if (sourceLayer != null) {
       symbolLayer.setSourceLayer(sourceLayer);
@@ -913,11 +913,11 @@ final class MapboxMapController
           final String filter = call.argument("filter");
           final boolean enableInteraction = call.argument("enableInteraction");
           final PropertyValue[] properties =
-              LayerPropertyConverter.interpretGalliMarkerLayerProperties(call.argument("properties"));
+              LayerPropertyConverter.interpretSymbolLayerProperties(call.argument("properties"));
 
           Expression filterExpression = parseFilter(filter);
 
-          addGalliMarkerLayer(
+          addSymbolLayer(
               layerId,
               sourceId,
               belowLayerId,
@@ -1261,8 +1261,8 @@ final class MapboxMapController
             ((HeatmapLayer) layer).setFilter(expression);
           } else if (layer instanceof LineLayer) {
             ((LineLayer) layer).setFilter(expression);
-          } else if (layer instanceof GalliMarkerLayer) {
-            ((GalliMarkerLayer) layer).setFilter(expression);
+          } else if (layer instanceof SymbolLayer) {
+            ((SymbolLayer) layer).setFilter(expression);
           } else {
             result.error(
                 "INVALID LAYER TYPE",
@@ -1297,8 +1297,8 @@ final class MapboxMapController
             filter = ((HeatmapLayer) layer).getFilter();
           } else if (layer instanceof LineLayer) {
             filter = ((LineLayer) layer).getFilter();
-          } else if (layer instanceof GalliMarkerLayer) {
-            filter = ((GalliMarkerLayer) layer).getFilter();
+          } else if (layer instanceof SymbolLayer) {
+            filter = ((SymbolLayer) layer).getFilter();
           } else {
             result.error(
                     "INVALID LAYER TYPE",

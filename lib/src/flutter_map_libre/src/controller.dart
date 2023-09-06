@@ -362,15 +362,15 @@ class GalliMapController extends ChangeNotifier {
   /// Filters are written as [expressions].
   ///
   /// [expressions]: https://docs.mapbox.com/mapbox-gl-js/style-spec/expressions
-  Future<void> addGalliMarkerLayer(
-      String sourceId, String layerId, GalliMarkerLayerProperties properties,
+  Future<void> addSymbolLayer(
+      String sourceId, String layerId, SymbolLayerProperties properties,
       {String? belowLayerId,
       String? sourceLayer,
       double? minzoom,
       double? maxzoom,
       dynamic filter,
       bool enableInteraction = true}) async {
-    await _mapboxGlPlatform.addGalliMarkerLayer(
+    await _mapboxGlPlatform.addSymbolLayer(
       sourceId,
       layerId,
       properties.toJson(),
@@ -1234,8 +1234,8 @@ class GalliMapController extends ChangeNotifier {
           minzoom: minzoom,
           maxzoom: maxzoom,
           filter: filter);
-    } else if (properties is GalliMarkerLayerProperties) {
-      addGalliMarkerLayer(sourceId, layerId, properties,
+    } else if (properties is SymbolLayerProperties) {
+      addSymbolLayer(sourceId, layerId, properties,
           belowLayerId: belowLayerId,
           enableInteraction: enableInteraction,
           sourceLayer: sourceLayer,

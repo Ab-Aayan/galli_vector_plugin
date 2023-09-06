@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:math' hide log;
 
 import 'package:flutter/material.dart';
@@ -41,6 +42,7 @@ class _VectorMapState extends State<VectorMap> {
       body: SafeArea(
         child: Center(
           child: GalliMap(
+            showCurrentLocation: true,
             authToken: "token",
             size: (
               height: MediaQuery.of(context).size.height * 2,
@@ -57,29 +59,34 @@ class _VectorMapState extends State<VectorMap> {
             },
             onMapClick: (LatLng latLng) {
               methods.get360Image(latLng).then((value) {
-                GalliViewer galliViewer = GalliViewer(
-                  builder: (BuildContext context, Function() methodFromChild) {
-                    clearMarkers = methodFromChild;
-                  },
-                  image: value,
-                  onTap: (latitude, longitude, tilt) {},
-                  markers: markers,
-                  maxMarkers: 2,
-                );
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (_) => Scaffold(
-                            appBar: AppBar(
-                              actions: [
-                                GestureDetector(
-                                    onTap: () {
-                                      clearMarkers();
-                                    },
-                                    child: const Text("Clear"))
-                              ],
-                            ),
-                            body: galliViewer)));
+                if (value != null) {
+                  GalliViewer galliViewer = GalliViewer(
+                    builder:
+                        (BuildContext context, Function() methodFromChild) {
+                      clearMarkers = methodFromChild;
+                    },
+                    image: value,
+                    onTap: (latitude, longitude, tilt) {},
+                    markers: markers,
+                    maxMarkers: 2,
+                  );
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (_) => Scaffold(
+                              appBar: AppBar(
+                                actions: [
+                                  GestureDetector(
+                                      onTap: () {
+                                        clearMarkers();
+                                      },
+                                      child: const Text("Clear"))
+                                ],
+                              ),
+                              body: galliViewer)));
+                } else {
+                  log("Image not found");
+                }
               });
 
               // String? data =

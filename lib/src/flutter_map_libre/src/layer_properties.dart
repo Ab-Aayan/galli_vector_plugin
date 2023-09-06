@@ -7,7 +7,7 @@ abstract class LayerProperties {
   Map<String, dynamic> toJson();
 }
 
-class GalliMarkerLayerProperties implements LayerProperties {
+class SymbolLayerProperties implements LayerProperties {
   // Paint Properties
   /// The opacity at which the icon will be drawn.
   ///
@@ -780,7 +780,7 @@ class GalliMarkerLayerProperties implements LayerProperties {
   ///   basic functionality with js, android, ios, macos
   final dynamic visibility;
 
-  const GalliMarkerLayerProperties({
+  const SymbolLayerProperties({
     this.iconOpacity,
     this.iconColor,
     this.iconHaloColor,
@@ -839,8 +839,8 @@ class GalliMarkerLayerProperties implements LayerProperties {
     this.visibility,
   });
 
-  GalliMarkerLayerProperties copyWith(GalliMarkerLayerProperties changes) {
-    return GalliMarkerLayerProperties(
+  SymbolLayerProperties copyWith(SymbolLayerProperties changes) {
+    return SymbolLayerProperties(
       iconOpacity: changes.iconOpacity ?? iconOpacity,
       iconColor: changes.iconColor ?? iconColor,
       iconHaloColor: changes.iconHaloColor ?? iconHaloColor,
@@ -971,8 +971,8 @@ class GalliMarkerLayerProperties implements LayerProperties {
     return json;
   }
 
-  factory GalliMarkerLayerProperties.fromJson(Map<String, dynamic> json) {
-    return GalliMarkerLayerProperties(
+  factory SymbolLayerProperties.fromJson(Map<String, dynamic> json) {
+    return SymbolLayerProperties(
       iconOpacity: json['icon-opacity'],
       iconColor: json['icon-color'],
       iconHaloColor: json['icon-halo-color'],
