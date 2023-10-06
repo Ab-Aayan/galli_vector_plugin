@@ -5,6 +5,8 @@ import 'package:galli_vector_plugin/src/static/url.dart';
 
 enum Three60Type { focused, near }
 
+enum RoutingMethods { driving, cycling, walking }
+
 class GalliMethods {
   final String accessToken;
   GalliMethods(this.accessToken);

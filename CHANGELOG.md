@@ -21,3 +21,11 @@
 ## 0.0.6
 
 * Android location fixes
+
+## 0.0.7
+
+* Added children to map and hide default search bar
+
+## 0.0.8
+
+* Added routing methods

@@ -13,6 +13,8 @@ class GalliMap extends StatefulWidget {
   final bool showCurrentLocation;
   final bool showCompass;
   final bool showCurrentLocationButton;
+  final bool showSearchWidget;
+  final bool showThree60Widget;
   final ({CompassViewPosition? position, Point<num>? offset}) compassPosition;
   final Function(GalliMapController controller)? onMapCreated;
   final Function(LatLng latlng)? onMapClick;
@@ -27,11 +29,14 @@ class GalliMap extends StatefulWidget {
   final bool tiltGestureEnabled;
   final bool scrollGestureEnabled;
   final Function(LatLng latLng)? onMapLongPress;
+  final List<Widget> children;
 
   const GalliMap(
       {super.key,
       this.showCurrentLocation = true,
       this.showCompass = true,
+      this.showSearchWidget = true,
+      this.showThree60Widget = true,
       this.compassPosition = (
         position: CompassViewPosition.bottomRight,
         offset: const Point(30, 48)
@@ -57,7 +62,8 @@ class GalliMap extends StatefulWidget {
       this.tiltGestureEnabled = true,
       this.scrollGestureEnabled = true,
       this.rotateGestureEnabled = true,
-      this.onMapLongPress});
+      this.onMapLongPress,
+      this.children = const []});
 
   @override
   State<GalliMap> createState() => _GalliMapState();
@@ -169,18 +175,19 @@ class _GalliMapState extends State<GalliMap> {
                     child: CurrentLocationWidget(
                       controller: galliMapController!,
                     )),
-              if (galliMapController != null)
+              if (galliMapController != null && widget.showThree60Widget)
                 Positioned(
                     bottom: 73,
                     right: 16,
                     child:
                         Three60ButtonWidget(controller: galliMapController!)),
-              if (galliMapController != null)
+              if (galliMapController != null && widget.showSearchWidget)
                 GalliSearchWidget(
                   width: widget.size.width * 0.9,
                   authToken: widget.authToken,
                   mapController: galliMapController!,
-                )
+                ),
+              for (Widget widget in widget.children) widget
             ]),
     );
   }

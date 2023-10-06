@@ -32,5 +32,3 @@ class GalliUrl {
 }
 
 final GalliUrl galliUrl = GalliUrl();
-
-enum RoutingMethods { driving, cycling, walking }
