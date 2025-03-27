@@ -55,42 +55,50 @@ class _VectorMapState extends State<VectorMap> {
             showCompass: true,
             onMapCreated: (newC) {
               controller = newC;
+
+              controller!.addFill(FillOptions());
+              controller!.addCircle(CircleOptions(
+                circleOpacity: 0.32,
+                geometry: LatLng(27.677670698052346, 85.32128605620954),
+                circleRadius: 50,
+              ));
               setState(() {});
             },
             onMapClick: (LatLng latLng) {
-              methods.get360Image(latLng).then((value) {
-                if (value != null) {
-                  GalliViewer galliViewer = GalliViewer(
-                    builder:
-                        (BuildContext context, Function() methodFromChild) {
-                      clearMarkers = methodFromChild;
-                    },
-                    image: value,
-                    onTap: (latitude, longitude, tilt) {},
-                    markers: markers,
-                    maxMarkers: 2,
-                  );
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (_) => Scaffold(
-                              appBar: AppBar(
-                                actions: [
-                                  GestureDetector(
-                                      onTap: () {
-                                        clearMarkers();
-                                      },
-                                      child: const Text("Clear"))
-                                ],
-                              ),
-                              body: galliViewer)));
-                } else {
-                  log("Image not found");
-                }
-              });
+              // methods.get360Image(latLng).then((value) {
+              //   if (value != null) {
+              //     GalliViewer galliViewer = GalliViewer(
+              //       builder:
+              //           (BuildContext context, Function() methodFromChild) {
+              //         clearMarkers = methodFromChild;
+              //       },
+              //       image: value,
+              //       onTap: (latitude, longitude, tilt) {},
+              //       markers: markers,
+              //       maxMarkers: 2,
+              //     );
+              //     Navigator.push(
+              //         context,
+              //         MaterialPageRoute(
+              //             builder: (_) => Scaffold(
+              //                 appBar: AppBar(
+              //                   actions: [
+              //                     GestureDetector(
+              //                         onTap: () {
+              //                           clearMarkers();
+              //                         },
+              //                         child: const Text("Clear"))
+              //                   ],
+              //                 ),
+              //                 body: galliViewer)));
+              //   } else {
+              //     log("Image not found");
+              //   }
+              // });
 
               // String? data =
               //     await galliMapController!.reverGeoCoding(latLng);
+              log("latlng $latLng");
             },
           ),
         ),

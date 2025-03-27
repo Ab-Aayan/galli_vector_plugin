@@ -1,15 +1,60 @@
 # galli_vector_plugin
 
-A new Flutter plugin project.
+`galli_vector_plugin` is a Flutter plugin for integrating vector maps from Gallimaps into your Flutter applications. This plugin provides an easy way to display and interact with high-quality vector maps.
 
-## Getting Started
+## Features
 
-This project is a starting point for a Flutter
-[plug-in package](https://flutter.dev/developing-packages/),
-a specialized package that includes platform-specific implementation code for
-Android and/or iOS.
+- High-performance vector maps
+- Map markers, routes, fills and circles
+- User interaction handling (e.g., tap, zoom, tilt, pan)
+- Automatic map caching for offline
 
-For help getting started with Flutter development, view the
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Installation
 
+Add `galli_vector_plugin` to your `pubspec.yaml` file:
+
+```yaml
+dependencies:
+  galli_vector_plugin: latest
+```
+
+Then, run flutter pub get to install the new dependency.
+
+## Usage
+
+Import the plugin in your Dart code:
+
+```dart
+import 'package:galli_vector_plugin/galli_vector_plugin.dart';
+```
+
+## Basic Example
+
+Here is a simple example of how to use the galli_vector_plugin:
+
+```dart
+GalliMap(
+            showCurrentLocation: true,
+            authToken: "authToken",
+            size: (
+              height: MediaQuery.of(context).size.height * 2,
+              width: MediaQuery.of(context).size.width * 2,
+            ),
+            compassPosition: (
+              position: CompassViewPosition.topRight,
+              offset: const Point(32, 82)
+            ),
+            showCompass: true,
+            onMapCreated: (newC) {
+              controller = newC;
+              setState(() {});
+            },
+            onMapClick: (LatLng latLng) {
+
+            },
+          ),
+```
+
+## Documentation
+
+For detailed documentation and advanced usage, please visit the official [documentation](https://gallimaps.com/documentation/flutter-vector-doc.html).

@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'package:galli_vector_plugin/galli_vector_plugin.dart';
 import 'package:galli_vector_plugin/src/api/galli_api.dart';
 import 'package:galli_vector_plugin/src/encryption/encryption.dart';
@@ -10,7 +11,8 @@ enum RoutingMethods { driving, cycling, walking }
 class GalliMethods {
   final String accessToken;
   GalliMethods(this.accessToken);
-  Future autoComplete(String query, {LatLng? location}) async {
+  Future autoComplete(String query, LatLng location) async {
+    log("location: $location");
     var response = await geoApi.get(
         galliUrl.autoComplete(query, accessToken, latlng: location),
         accessToken);

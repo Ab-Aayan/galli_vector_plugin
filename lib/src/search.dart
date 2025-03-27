@@ -54,14 +54,18 @@ class _GalliSearchWidgetState extends State<GalliSearchWidget> {
       try {
         autoCompleteResults.clear();
         setState(() {});
-        var data = await GalliMethods(widget.authToken).autoComplete(query);
+        LatLng? latlng = await widget.mapController.requestMyLocationLatLng();
+        if (latlng == null) return;
+        var data = await GalliMethods(widget.authToken)
+            .autoComplete(query, latlng = latlng);
+        log("autoComplete: $data");
         if (data != null) {
           for (Map rawData in data["data"]) {
             if (autoCompleteResults.length < 10 && rawData["name"] != "") {
               autoCompleteResults.add({
                 "name": rawData["name"],
-                "distance": (double.parse(rawData["distance"]) / 1000)
-                    .toStringAsFixed(2)
+                "distance":
+                    (double.parse(rawData["distance"])).toStringAsFixed(2)
               });
               setState(() {});
               await Future.delayed(const Duration(milliseconds: 10));

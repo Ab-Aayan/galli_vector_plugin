@@ -112,7 +112,7 @@ class _GalliMapState extends State<GalliMap> {
           : Stack(children: [
               ClipRRect(
                 child: Transform.scale(
-                  scale: 1.18,
+                  scale: 1,
                   child: MaplibreMap(
                       minMaxZoomPreference: widget.minMaxZoomPreference,
                       doubleClickZoomEnabled: widget.doubleClickZoomEnabled,
@@ -126,8 +126,10 @@ class _GalliMapState extends State<GalliMap> {
                           widget.onMapLongPress!(latlng);
                         }
                       },
-                      onMapCreated: (_) {
+                      onMapCreated: (_) async {
                         galliMapController = _;
+                        await Future.delayed(
+                            const Duration(milliseconds: 1000));
                         if (widget.onMapCreated != null) {
                           widget.onMapCreated!(_);
                         }
@@ -139,8 +141,12 @@ class _GalliMapState extends State<GalliMap> {
                       },
                       trackCameraPosition: true,
                       myLocationEnabled: widget.showCurrentLocation,
-                      myLocationRenderMode: MyLocationRenderMode.compass,
-                      myLocationTrackingMode: MyLocationTrackingMode.tracking,
+                      myLocationRenderMode: widget.showCurrentLocation
+                          ? MyLocationRenderMode.compass
+                          : MyLocationRenderMode.normal,
+                      myLocationTrackingMode: widget.showCurrentLocation
+                          ? MyLocationTrackingMode.tracking
+                          : MyLocationTrackingMode.none,
                       compassEnabled: widget.showCompass,
                       compassViewPosition: widget.compassPosition.position,
                       compassViewMargins: widget.compassPosition.offset,
@@ -150,7 +156,7 @@ class _GalliMapState extends State<GalliMap> {
                         }
                       },
                       styleString:
-                          "https://maps.gallimap.com/styles/light/style.json",
+                          "https://map-init.gallimap.com/styles/light/style.json?accessToken=${widget.authToken}",
                       initialCameraPosition: widget.initialCameraPostion),
                 ),
               ),
