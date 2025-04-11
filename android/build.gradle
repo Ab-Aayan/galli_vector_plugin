@@ -23,7 +23,8 @@ apply plugin: 'com.android.library'
 apply plugin: 'org.jetbrains.kotlin.android'
 
 android {
-
+    
+    namespace 'map.galliexpress.galli_vector_plugin'
     compileSdkVersion 31
     ndkVersion "20.1.5948944"
 
