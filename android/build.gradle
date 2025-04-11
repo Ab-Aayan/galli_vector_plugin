@@ -26,6 +26,7 @@ android {
 
     compileSdkVersion 31
     ndkVersion "20.1.5948944"
+    namespace 'map.galliexpress.galli_vector_plugin'
 
     defaultConfig {
         minSdkVersion 21
@@ -56,6 +57,6 @@ dependencies {
 }
 java {
     toolchain {
-        languageVersion.set(JavaLanguageVersion.of(8)) // or 17 if required
+        languageVersion.set(JavaLanguageVersion.of(8)) 
     }
 }

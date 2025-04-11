@@ -1,3 +1,4 @@
 {
-  "cmake.sourceDirectory": "/Users/saugatshakya/Projects/Flutter/galli_vector_plugin/example/linux"
+  "cmake.sourceDirectory": "/Users/saugatshakya/Projects/Flutter/galli_vector_plugin/example/linux",
+  "java.configuration.updateBuildConfiguration": "interactive"
 }
